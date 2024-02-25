@@ -1,6 +1,8 @@
 module github.com/hyperledger/fabric-lib-go
 
-go 1.20
+go 1.21
+
+toolchain go1.21.4
 
 require (
 	github.com/go-kit/kit v0.8.0
@@ -10,6 +12,7 @@ require (
 	github.com/onsi/gomega v1.31.0
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v0.9.3
+	github.com/rustem-galeev/gost-crypto-algs/hash v0.0.0-20240226194521-98603031dd7e
 	github.com/spf13/viper v1.7.0
 	github.com/stretchr/testify v1.8.4
 	github.com/sykesm/zap-logfmt v0.0.4
@@ -39,6 +42,7 @@ require (
 	github.com/prometheus/client_model v0.0.0-20190129233127-fd36f4220a90 // indirect
 	github.com/prometheus/common v0.4.0 // indirect
 	github.com/prometheus/procfs v0.0.0-20190507164030-5867b95ac084 // indirect
+	github.com/rustem-galeev/gost-crypto-algs/common v0.0.0-20240225191309-be30fb53bf71 // indirect
 	github.com/spf13/afero v1.11.0 // indirect
 	github.com/spf13/cast v1.6.0 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect

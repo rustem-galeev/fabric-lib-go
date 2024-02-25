@@ -129,6 +129,12 @@ github.com/prometheus/common/model
 ## explicit
 github.com/prometheus/procfs
 github.com/prometheus/procfs/internal/fs
+# github.com/rustem-galeev/gost-crypto-algs/common v0.0.0-20240225191309-be30fb53bf71
+## explicit; go 1.21
+github.com/rustem-galeev/gost-crypto-algs/common
+# github.com/rustem-galeev/gost-crypto-algs/hash v0.0.0-20240226194521-98603031dd7e
+## explicit; go 1.21
+github.com/rustem-galeev/gost-crypto-algs/hash
 # github.com/spf13/afero v1.11.0
 ## explicit; go 1.19
 github.com/spf13/afero

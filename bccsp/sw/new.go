@@ -8,13 +8,12 @@ package sw
 
 import (
 	"crypto/elliptic"
-	"crypto/sha256"
-	"crypto/sha512"
+	"hash"
 	"reflect"
 
 	"github.com/hyperledger/fabric-lib-go/bccsp"
 	"github.com/pkg/errors"
-	"golang.org/x/crypto/sha3"
+	gost "github.com/rustem-galeev/gost-crypto-algs/hash"
 )
 
 // NewDefaultSecurityLevel returns a new instance of the software-based BCCSP
@@ -70,11 +69,20 @@ func NewWithParams(securityLevel int, hashFamily string, keyStore bccsp.KeyStore
 	swbccsp.AddWrapper(reflect.TypeOf(&rsaPublicKey{}), &rsaPublicKeyKeyVerifier{})
 
 	// Set the Hashers
-	swbccsp.AddWrapper(reflect.TypeOf(&bccsp.SHAOpts{}), &hasher{hash: conf.hashFunction})
-	swbccsp.AddWrapper(reflect.TypeOf(&bccsp.SHA256Opts{}), &hasher{hash: sha256.New})
-	swbccsp.AddWrapper(reflect.TypeOf(&bccsp.SHA384Opts{}), &hasher{hash: sha512.New384})
-	swbccsp.AddWrapper(reflect.TypeOf(&bccsp.SHA3_256Opts{}), &hasher{hash: sha3.New256})
-	swbccsp.AddWrapper(reflect.TypeOf(&bccsp.SHA3_384Opts{}), &hasher{hash: sha3.New384})
+	ghasher := &hasher{hash: func() hash.Hash {
+		ghash, _ := gost.New(32)
+		return ghash
+	}}
+	swbccsp.AddWrapper(reflect.TypeOf(&bccsp.SHAOpts{}), ghasher)
+	swbccsp.AddWrapper(reflect.TypeOf(&bccsp.SHA256Opts{}), ghasher)
+	swbccsp.AddWrapper(reflect.TypeOf(&bccsp.SHA384Opts{}), ghasher)
+	swbccsp.AddWrapper(reflect.TypeOf(&bccsp.SHA3_256Opts{}), ghasher)
+	swbccsp.AddWrapper(reflect.TypeOf(&bccsp.SHA3_384Opts{}), ghasher)
+	//swbccsp.AddWrapper(reflect.TypeOf(&bccsp.SHAOpts{}), conf.hashFunction})
+	//swbccsp.AddWrapper(reflect.TypeOf(&bccsp.SHA256Opts{}), &hasher{hash: sha256.New})
+	//swbccsp.AddWrapper(reflect.TypeOf(&bccsp.SHA384Opts{}), &hasher{hash: sha512.New384})
+	//swbccsp.AddWrapper(reflect.TypeOf(&bccsp.SHA3_256Opts{}), &hasher{hash: sha3.New256})
+	//swbccsp.AddWrapper(reflect.TypeOf(&bccsp.SHA3_384Opts{}), &hasher{hash: sha3.New384})
 
 	// Set the key generators
 	swbccsp.AddWrapper(reflect.TypeOf(&bccsp.ECDSAKeyGenOpts{}), &ecdsaKeyGenerator{curve: conf.ellipticCurve})
