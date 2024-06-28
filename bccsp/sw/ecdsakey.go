@@ -69,6 +69,10 @@ func (k *ecdsaPrivateKey) PublicKey() (bccsp.Key, error) {
 	return &ecdsaPublicKey{&k.privKey.PublicKey}, nil
 }
 
+func (k *ecdsaPrivateKey) Original() interface{} {
+	return k.privKey
+}
+
 type ecdsaPublicKey struct {
 	pubKey *ecdsa.PublicKey
 }
@@ -114,4 +118,8 @@ func (k *ecdsaPublicKey) Private() bool {
 // This method returns an error in symmetric key schemes.
 func (k *ecdsaPublicKey) PublicKey() (bccsp.Key, error) {
 	return k, nil
+}
+
+func (k *ecdsaPublicKey) Original() interface{} {
+	return k.pubKey
 }

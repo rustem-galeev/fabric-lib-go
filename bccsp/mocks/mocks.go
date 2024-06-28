@@ -147,6 +147,10 @@ func (m *MockKey) PublicKey() (bccsp.Key, error) {
 	return m.PK, m.PKErr
 }
 
+func (m *MockKey) Original() interface{} {
+	return nil
+}
+
 type SignerOpts struct {
 	HashFuncValue crypto.Hash
 }

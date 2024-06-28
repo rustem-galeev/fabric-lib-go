@@ -62,6 +62,10 @@ func (k *ed25519PrivateKey) PublicKey() (bccsp.Key, error) {
 	return &ed25519PublicKey{&castedKey}, nil
 }
 
+func (k *ed25519PrivateKey) Original() interface{} {
+	return k.privKey
+}
+
 type ed25519PublicKey struct {
 	pubKey *ed25519.PublicKey
 }
@@ -106,4 +110,8 @@ func (k *ed25519PublicKey) Private() bool {
 // This method returns an error in symmetric key schemes.
 func (k *ed25519PublicKey) PublicKey() (bccsp.Key, error) {
 	return k, nil
+}
+
+func (k *ed25519PublicKey) Original() interface{} {
+	return k.pubKey
 }

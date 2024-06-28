@@ -32,6 +32,9 @@ type Key interface {
 	// PublicKey returns the corresponding public key part of an asymmetric public/private key pair.
 	// This method returns an error in symmetric key schemes.
 	PublicKey() (Key, error)
+
+	// Original returns the corresponding original key (like ecdsa.PrivateKey)
+	Original() interface{}
 }
 
 // KeyGenOpts contains options for key-generation with a CSP.

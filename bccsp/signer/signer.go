@@ -8,7 +8,6 @@ package signer
 
 import (
 	"crypto"
-	"crypto/x509"
 	"io"
 
 	"github.com/hyperledger/fabric-lib-go/bccsp"
@@ -42,15 +41,7 @@ func New(csp bccsp.BCCSP, key bccsp.Key) (crypto.Signer, error) {
 		return nil, errors.Wrap(err, "failed getting public key")
 	}
 
-	raw, err := pub.Bytes()
-	if err != nil {
-		return nil, errors.Wrap(err, "failed marshalling public key")
-	}
-
-	pk, err := x509.ParsePKIXPublicKey(raw)
-	if err != nil {
-		return nil, errors.Wrap(err, "failed marshalling der to public key")
-	}
+	pk := pub.Original()
 
 	return &bccspCryptoSigner{csp, key, pk}, nil
 }
